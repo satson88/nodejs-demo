@@ -36,7 +36,7 @@ pipeline {
             }
         }
         
-        stage('Push to Artifcatory') {
+        /*stage('Push to Artifcatory') {
             steps {
                 sh "sudo docker push ${registry}/${imageName}:${version}"
             }
@@ -50,7 +50,7 @@ pipeline {
                     -Dsonar.host.url=http://sonar.manolabs.co.in:9000 \
                     -Dsonar.login=sqp_d5fbbdfcf09bc49b5e9a0edb89639fc66aa45993"
             }
-        }
+        } 
 
         stage('Deploy') {
             steps {
@@ -69,6 +69,18 @@ pipeline {
 
                 '''
             }
-        }
+        } */
+        stage('Deploy') {
+            steps {
+                 sh '''
+                 export KUBECONFIG=/var/lib/jenkins/kubeconfig
+
+                 sed "s/{{theVersion}}/$version/g" deployment.yaml > deployment-amend.yaml
+
+                 kubectl apply -f deployment-amend.yaml
+                 
+                 kubectl apply -f service.yaml
+                 
+                 '''
     }
 }

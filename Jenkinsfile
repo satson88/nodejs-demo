@@ -51,7 +51,7 @@ pipeline {
                     -Dsonar.login=sqp_d5fbbdfcf09bc49b5e9a0edb89639fc66aa45993"
             }
         } 
-*/
+
         stage('Deploy') {
             steps {
                  sh '''
@@ -70,20 +70,20 @@ pipeline {
                 '''
             }
         } 
-        /*
+      */  
         stage('Deploy') {
             steps {
                  sh '''
                  export KUBECONFIG=/var/lib/jenkins/kubeconfig
 
-                 sed "s/{{theVersion}}/$version/g" deployment.yaml > deployment-amend.yaml
+                 sed "s/{{theVersion}}/$version/g" resources/deployment.yaml > deployment-amend.yaml
 
                  kubectl apply -f deployment-amend.yaml
                  
-                 kubectl apply -f service.yaml
+                 kubectl apply -f resources/service.yaml
                  
                  '''
     }
-    */
+    
 }
 }

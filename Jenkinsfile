@@ -76,7 +76,7 @@ pipeline {
                  sh '''
                  export KUBECONFIG=/var/lib/jenkins/kubeconfig
 
-                 sed "s/{{theVersion}}/$version/g" resources/deployment.yaml > deployment-amend.yaml
+                 sed "s/{{theversion}}/$version/g" resources/deployment.yaml > deployment-amend.yaml
 
                  kubectl apply -f deployment-amend.yaml
                  

@@ -8,7 +8,7 @@ pipeline {
         containerName = "nodejs-app-container"  // Replace with your desired container name
         dockerfilePath = "./Dockerfile"  // Replace with the path to your Dockerfile
         dockerArgs = "-p 3000:3000"  // Replace with your desired container arguments
-        version = sh(script: 'jq \'.version\' package.json', returnStdout: true).trim()
+        version = sh(script: 'jq \'.version\' package.json | awk -F \'\\\"\' \'{print $2}\'', returnStdout: true).trim()
     }
     stages {
         stage('Clean WS') { 
